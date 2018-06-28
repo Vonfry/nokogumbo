@@ -1,7 +1,9 @@
 require 'mkmf'
 $CFLAGS += " -std=c99"
 
-if have_library('xml2', 'xmlNewDoc') 
+rakehome = ENV['RAKEHOME'] || File.expand_path('../..')
+
+if have_library('xml2', 'xmlNewDoc')
   # libxml2 libraries from http://www.xmlsoft.org/
   pkg_config('libxml-2.0')
 
@@ -24,7 +26,6 @@ end
 
 # add in gumbo-parser source from github if not already installed
 unless have_library('gumbo', 'gumbo_parse')
-  rakehome = ENV['RAKEHOME'] || File.expand_path('../..')
   unless File.exist? "#{rakehome}/ext/nokogumboc/gumbo.h"
     require 'fileutils'
     FileUtils.cp Dir["#{rakehome}/gumbo-parser/src/*"],
